@@ -23,6 +23,8 @@ import me.boomboompower.utils.ChatColor;
 import me.boomboompower.gui.utils.ModernButton;
 import me.boomboompower.gui.utils.ModernTextBox;
 
+import me.dewgs.fpsspoof.SpoofType;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -67,13 +69,13 @@ public class SettingsGui extends GuiScreen {
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
 
-        this.textField = new ModernTextBox(0, this.width / 2 - 150, this.height / 2 - 46, 300, 20, "General value", true);
-        this.maxField = new ModernTextBox(1, this.width / 2 - 150, this.height / 2 - 22, 300, 20, "Randomizer max value", true);
+        this.textField = new ModernTextBox(0, this.width / 2 - 150, this.height / 2 - 70, 300, 20, "General value", true);
+        this.maxField = new ModernTextBox(1, this.width / 2 - 150, this.height / 2 - 46, 300, 20, "Randomizer max value", true);
 
-        this.buttonList.add(new ModernButton(1, this.width / 2 - 75, this.height / 2 + 26, 150, 20, "Randomize"));
-        this.buttonList.add(new ModernButton(2, this.width / 2 - 75, this.height / 2 + 50, 150, 20, "Mulitply"));
-        this.buttonList.add(new ModernButton(3, this.width / 2 - 75, this.height / 2 + 74, 150, 20, "Addition"));
-        this.buttonList.add(new ModernButton(4, this.width / 2 - 75, this.height / 2 + 98, 150, 20, "Reset FPS"));
+        this.buttonList.add(new ModernButton(1, this.width / 2 - 75, this.height / 2 + 2, 150, 20, "Randomize FPS"));
+        this.buttonList.add(new ModernButton(2, this.width / 2 - 75, this.height / 2 + 26, 150, 20, "Mulitply FPS"));
+        this.buttonList.add(new ModernButton(3, this.width / 2 - 75, this.height / 2 + 50, 150, 20, "Add FPS"));
+        this.buttonList.add(new ModernButton(4, this.width / 2 - 75, this.height / 2 + 74, 150, 20, "Reset FPS"));
 
         this.textField.setMaxStringLength(10);
         this.textField.setText(input);
@@ -99,7 +101,65 @@ public class SettingsGui extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
         switch (button.id) {
-            // TODO
+            case 1:
+                if (textField.getText().isEmpty() || maxField.getText().isEmpty()) {
+                    displayMessage("Inputs cannot be empty!");
+                    return;
+                }
+                try {
+                    double value1 = Double.parseDouble(textField.getText());
+                    double value2 = Double.parseDouble(maxField.getText());
+
+                    if (value1 > value2) {
+                        double newVal = value1;
+                        value1 = value2;
+                        value2 = newVal;
+                    }
+
+                    this.mod.setSpoofType(SpoofType.RANDOMIZER);
+                    this.mod.setValues(new double[] { value1, value2 });
+                    sendChatMessage("Will spoof FPS ranging from " + value1 + " to " + value2);
+                    mc.displayGuiScreen(null);
+                } catch (NumberFormatException ex) {
+                    displayMessage("Invalid input for general/max value. Only use numbers!");
+                }
+                break;
+            case 2:
+                if (textField.getText().isEmpty()) {
+                    displayMessage("Max value input cannot be empty!");
+                    return;
+                }
+                try {
+                    final double value3 = Double.parseDouble(textField.getText());
+                    this.mod.setSpoofType(SpoofType.MULTIPLIER);
+                    this.mod.setValues(new double[] { value3 });
+                    sendChatMessage("Will spoof FPS based on your real FPS multiplied by " + value3);
+                    mc.displayGuiScreen(null);
+                } catch (NumberFormatException ex) {
+                    displayMessage("Invalid input for max time. Only use numbers!");
+                }
+                break;
+            case 3:
+                if (textField.getText().isEmpty()) {
+                    displayMessage("Max value input cannot be empty!");
+                    return;
+                }
+                try {
+                    final double value3 = Double.parseDouble(textField.getText());
+                    this.mod.setSpoofType(SpoofType.ADDITION);
+                    this.mod.setValues(new double[] { value3 });
+                    sendChatMessage("Will spoof FPS based on " + value3 + " added to your real FPS");
+                    mc.displayGuiScreen(null);
+                } catch (NumberFormatException ex) {
+                    displayMessage("Invalid input for max time. Only use numbers!");
+                }
+                break;
+            case 4:
+                this.mod.setSpoofType(SpoofType.OFF);
+                this.mod.setValues(null);
+                sendChatMessage("Will no longer spoof FPS");
+                mc.displayGuiScreen(null);
+                break;
         }
     }
 
@@ -161,7 +221,7 @@ public class SettingsGui extends GuiScreen {
     }
 
     private void drawString(String message, int x, int y, int color) {
-        fontRendererObj.drawString(message, (float) (x - fontRendererObj.getStringWidth(message) / 2), (float) y, color, false);
+        this.fontRendererObj.drawString(message, (float) (x - this.fontRendererObj.getStringWidth(message) / 2), (float) y, color, false);
     }
 
     private void displayMessage(String message, Object... replacements) {
@@ -194,7 +254,7 @@ public class SettingsGui extends GuiScreen {
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 int color = Color.WHITE.getRGB();
 
-                this.fontRendererObj.drawString(ChatColor.RED + this.message, -this.fontRendererObj.getStringWidth(message) / 2, -4, color + (opacity << 24 & -16777216));
+                this.fontRendererObj.drawString(ChatColor.RED + this.message, -this.fontRendererObj.getStringWidth(this.message) / 2, -4, color + (opacity << 24 & -16777216));
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
             }

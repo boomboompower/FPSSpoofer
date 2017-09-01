@@ -73,8 +73,10 @@ public class FPSSpoofMod {
             }
             final FileWriter writer = new FileWriter(file, false);
             StringBuilder values = new StringBuilder();
-            for (final double value : this.values) {
-                values.append(value).append(" ");
+            if (this.values != null) {
+                for (final double value : this.values) {
+                    values.append(value).append(" ");
+                }
             }
             writer.write(this.spoofType.name() + " " + values);
             writer.close();
@@ -118,9 +120,8 @@ public class FPSSpoofMod {
 
     private int getFPS() {
         try {
-            return ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "debugFPS", "field_71470_ab");
-        }
-        catch (Throwable e) {
+            return ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "fpsCounter", "field_71420_M");
+        } catch (Throwable e) {
             e.printStackTrace();
             return 0;
         }
@@ -128,9 +129,8 @@ public class FPSSpoofMod {
 
     private void setFPS(final int fpsCounter) {
         try {
-            ReflectionHelper.setPrivateValue(Minecraft.class, Minecraft.getMinecraft(), fpsCounter, "debugFPS", "field_71470_ab");
-        }
-        catch (Throwable e) {
+            ReflectionHelper.setPrivateValue(Minecraft.class, Minecraft.getMinecraft(), fpsCounter, "fpsCounter", "field_71420_M");
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -171,11 +171,11 @@ public class FPSSpoofMod {
                     break;
                 }
                 case MULTIPLIER: {
-                    displayFPS = this.getFPS() * (int)this.values[0];
+                    displayFPS = this.getFPS() * (int) this.values[0];
                     break;
                 }
                 case ADDITION: {
-                    displayFPS = this.getFPS() + (int)this.values[0];
+                    displayFPS = this.getFPS() + (int) this.values[0];
                     break;
                 }
                 case OFF: {

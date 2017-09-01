@@ -399,12 +399,12 @@ public class ModernTextBox extends Gui {
                 default:
                     if (ChatAllowedCharacters.isAllowedCharacter(c)) {
                         if (onlyAllowNumbers) {
-                            if (Character.isLetterOrDigit(c)) {
+                            if (Character.isDigit(c)) {
                                 if (this.isEnabled) {
                                     this.writeText(Character.toString(c));
                                 }
                             } else if (!running) {
-                                alert("Only letters and numbers can be used!", 1250);
+                                alert("Only numbers can be used!", 1250);
                             }
                         } else {
                             if (this.isEnabled) {
@@ -726,7 +726,7 @@ public class ModernTextBox extends Gui {
     private String format(String input) {
         StringBuilder builder = new StringBuilder();
         for (char c : input.toCharArray()) {
-            if (Character.isLetterOrDigit(c)) {
+            if (Character.isDigit(c)) {
                 builder.append(c);
             }
         }
