@@ -56,3 +56,11 @@ processResources {
         exclude "mcmod.info"
     }
 }
+
+jar {
+    archiveName = "$baseName.$extension"
+}
+
+sourceJar {
+    archiveName = "$baseName-sources.$extension"
+}
