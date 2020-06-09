@@ -45,64 +45,6 @@ public class FPSSpoofModCommand extends CommandBase {
         } else {
             new SettingsGui(mod, getFrom(args)).display();
         }
-//        if (args.length == 0) {
-//            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Usage: " + this.getCommandUsage(sender)));
-//            return;
-//        }
-//        try {
-//            final SpoofType type = SpoofType.valueOf(args[0].toUpperCase());
-//            if (type == null) {
-//                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Type of fps spoof not found"));
-//                return;
-//            }
-//            switch (type) {
-//                case RANDOMIZER: {
-//                    if (args.length != 3) {
-//                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Usage: " + this.getCommandUsage(sender)));
-//                        return;
-//                    }
-//                    final double value1 = Double.parseDouble(args[1]);
-//                    final double value2 = Double.parseDouble(args[2]);
-//                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Will spoof FPS ranging from " + value1 + " to " + value2));
-//                    this.mod.setSpoofType(type);
-//                    this.mod.setValues(new double[] { value1, value2 });
-//                    break;
-//                }
-//                case MULTIPLIER: {
-//                    if (args.length != 2) {
-//                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Usage: " + this.getCommandUsage(sender)));
-//                        return;
-//                    }
-//                    final double value3 = Double.parseDouble(args[1]);
-//                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Will spoof FPS based on your real FPS multiplied by " + value3));
-//                    this.mod.setSpoofType(type);
-//                    this.mod.setValues(new double[] { value3 });
-//                    break;
-//                }
-//                case ADDITION: {
-//                    if (args.length != 2) {
-//                        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Usage: " + this.getCommandUsage(sender)));
-//                        return;
-//                    }
-//                    final double value3 = Double.parseDouble(args[1]);
-//                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Will spoof FPS based on " + value3 + " added to your real FPS"));
-//                    this.mod.setSpoofType(type);
-//                    this.mod.setValues(new double[] { value3 });
-//                    break;
-//                }
-//                case OFF: {
-//                    Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Will no longer spoof FPS"));
-//                    this.mod.setSpoofType(type);
-//                    this.mod.setValues(null);
-//                    break;
-//                }
-//            }
-//            this.mod.saveConfig();
-//        }
-//        catch (Throwable e) {
-//            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Usage: " + this.getCommandUsage(sender)));
-//            e.printStackTrace();
-//        }
     }
 
     public int getRequiredPermissionLevel() {
@@ -113,6 +55,7 @@ public class FPSSpoofModCommand extends CommandBase {
         return true;
     }
 
+    // Imagine using Array.join
     public String getFrom(String... args) {
         StringBuilder builder = new StringBuilder();
         for (String arg : args) {
