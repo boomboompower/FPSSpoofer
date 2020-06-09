@@ -7,36 +7,33 @@ buildscript {
         }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.0-SNAPSHOT"
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT"
     }
 }
 
 apply plugin: "net.minecraftforge.gradle.forge"
 
-version = modVersion
-group = modGroup
-archivesBaseName = modBaseName
+version = "1.0.0"
+group = "me.boomboompower.fpsspoofer"
+archivesBaseName = "FPSSpoofer"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+// We use Java 8
+sourceCompatibility = targetCompatibility = 1.8
 
 minecraft {
-    version = project.forgeVersion
+    // Default run directory will be located in 'PROJECT_DIR/run'
     runDir = "run"
 
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = project.mcpVersion
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    // Version retrieved off https://files.minecraftforge.net/
+    version = "1.8.9-11.15.1.1722"
+
+    // The mapping to use http://export.mcpbot.bspk.rs/stable/
+    mappings = "stable_22"
 }
 
 repositories {
     mavenCentral()
 }
-
 
 dependencies {
 }
